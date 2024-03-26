@@ -10,13 +10,13 @@ node {
         }
 
         stage('Build Docker') {
-            dockerImage = docker.build("springboot-deploy:${env.BUILD_NUMBER}")
+            dockerImage = wsl docker.build("springboot-deploy:${env.BUILD_NUMBER}")
         }
 
         stage('Deploy Docker') {
             echo "Docker Image Tag Name: ${dockerImageTag}"
-            sh "docker stop springboot-deploy || true && docker rm springboot-deploy || true"
-            sh "docker run --name springboot-deploy -d -p 8085:8085 springboot-deploy:${env.BUILD_NUMBER}"
+            sh "wsl docker stop springboot-deploy || true && docker rm springboot-deploy || true"
+            sh "wsl docker run --name springboot-deploy -d -p 8095:8095 springboot-deploy:${env.BUILD_NUMBER}"
         }
 
     } catch (e) {
